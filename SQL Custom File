@@ -1,0 +1,51 @@
+# Create a view to use in PowerBI.
+
+CREATE VIEW vw_invoices
+
+AS	
+
+SELECT
+
+--employees
+e.EmployeeId,
+e.LastName,
+e.FirstName,
+
+--customers
+c.CustomerId,
+c.State,
+c.Country,
+c.SupportRepId,
+
+--invoices
+i.InvoiceId,
+i.CustomerId,
+i.InvoiceDate,
+i.BillingState,
+i.BillingCountry,
+i.total,
+
+--invoice_items
+ii.InvoiceId,
+ii.TrackId,
+ii.UnitPrice,
+
+--tracks
+t.TrackId,
+t.GenreId,
+t.UnitPrice,
+
+--genres
+g.GenreId,
+g.name,
+
+--Last Refresh Date
+datetime(current_timestamp, 'localtime') AS [Last Refresh Date]
+
+FROM
+	employees e 
+	INNER JOIN customers c ON c.SupportRepId = e.EmployeeId
+	INNER JOIN invoices i ON i.CustomerId = c.CustomerId
+	INNER JOIN invoice_items ii ON ii.InvoiceId = i.InvoiceId
+	INNER JOIN tracks t ON ii.TrackId = t.TrackId
+	INNER JOIN genres g ON t.GenreId = g.GenreId;
