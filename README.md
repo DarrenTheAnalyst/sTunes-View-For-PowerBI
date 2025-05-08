@@ -10,7 +10,7 @@ The following is a list of certain syntax used in the RDBMS SQLite.
     CREATE VIEW
 # Conventions
     tablename.FieldName
-    JOIN ON foreignkey.dimensiontable = primarykey.facttable
+    JOIN ON facttable.foreignkey = dimensiontable.primarykey
 # Date Functions
     Datetime
 # Joins
